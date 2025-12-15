@@ -75,16 +75,9 @@ app.use("/api/admin/gallery", authMiddleware, galleryRoutes);
 app.use("/api/admin/services", authMiddleware, serviceRoutes);
 app.use("/api/admin/rentals", authMiddleware, rentalRoutes);
 
-app.get("/", (req, res) => {
-  res.send("API is running...");
-});
-
-// 404 - Route Not Found Handler
-app.use((req, res, next) => {
-    const error = new Error(`Not Found - ${req.originalUrl}`);
-    res.status(404);
-    next(error);
-});
+// app.get("/", (req, res) => {
+//   res.send("API is running...");
+// });
 
 // Serve Frontend in Production
 if (process.env.NODE_ENV === "production") {
@@ -94,6 +87,13 @@ if (process.env.NODE_ENV === "production") {
         res.sendFile(path.resolve(__dirname, "../frontend/dist", "index.html"));
     });
 }
+
+// 404 - Route Not Found Handler
+app.use((req, res, next) => {
+    const error = new Error(`Not Found - ${req.originalUrl}`);
+    res.status(404);
+    next(error);
+});
 
 // Global Error Handler
 app.use(errorHandler);
