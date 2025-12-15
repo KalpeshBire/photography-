@@ -10,7 +10,7 @@ export default function Services() {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/admin/services");
+        const res = await axios.get("/api/admin/services");
         // Filter only active items for public view
         const activeServices = res.data.filter(item => item.active);
         setServices(activeServices);
@@ -31,7 +31,7 @@ export default function Services() {
               <div className="p-3">
                  <Card.Img 
                     variant="top" 
-                    src={service.image?.url ? (service.image.url.startsWith('http') ? service.image.url : `http://localhost:5000/${service.image.url}`) : "https://via.placeholder.com/300"} 
+                    src={service.image?.url ? (service.image.url.startsWith('http') ? service.image.url : `/${service.image.url}`) : "https://via.placeholder.com/300"} 
                     style={{ height: "200px", objectFit: "cover" }}
                     className="rounded border border-secondary"
                  />

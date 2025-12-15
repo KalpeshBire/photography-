@@ -8,7 +8,7 @@ export default function Gallery() {
   useEffect(() => {
     const fetchGallery = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/admin/gallery");
+        const res = await axios.get("/api/admin/gallery");
         // Filter only active items for public view
         const activeItems = res.data.filter(item => item.isActive);
         setGalleryItems(activeItems);
@@ -26,7 +26,7 @@ export default function Gallery() {
           <Col md={4} key={item._id} className="mb-4">
             <div className="p-2 border rounded shadow-sm">
               <Image 
-                src={item.media?.url?.startsWith('http') ? item.media.url : `http://localhost:5000/${item.media?.url}`} 
+                src={item.media?.url?.startsWith('http') ? item.media.url : `/${item.media?.url}`} 
                 alt={item.title} 
                 fluid 
                 className="rounded border border-secondary"

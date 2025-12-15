@@ -21,6 +21,7 @@ const PORT = process.env.PORT || 5000;
 
 // Ensure uploads directory exists
 const uploadDir = path.join(__dirname, "uploads");
+
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir);
   console.log("📂 Created uploads directory");

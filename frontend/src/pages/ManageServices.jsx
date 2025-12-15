@@ -21,7 +21,7 @@ export default function ManageServices() {
   // Fetch Services
   const fetchServices = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/admin/services");
+      const res = await axios.get("/api/admin/services");
       setServices(res.data);
     } catch (error) {
       console.error("Error fetching services:", error);
@@ -59,7 +59,7 @@ export default function ManageServices() {
     try {
       if (editingItem) {
         // Edit Mode (Update Details)
-        await axios.put(`http://localhost:5000/api/admin/services/update/${editingItem._id}`, {
+        await axios.put(`/api/admin/services/update/${editingItem._id}`, {
             name: formData.name,
             serviceType: formData.serviceType,
             description: formData.description,
@@ -72,12 +72,12 @@ export default function ManageServices() {
         if (formData.file) {
              const replaceData = new FormData();
              replaceData.append("image", formData.file);
-             await axios.put(`http://localhost:5000/api/admin/services/replace/${editingItem._id}`, replaceData);
+             await axios.put(`/api/admin/services/replace/${editingItem._id}`, replaceData);
         }
 
       } else {
         // Create Mode
-        await axios.post("http://localhost:5000/api/admin/services/create", data);
+        await axios.post("/api/admin/services/create", data);
       }
       
       setShowModal(false);
@@ -94,7 +94,7 @@ export default function ManageServices() {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this service?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/admin/services/delete/${id}`);
+        await axios.delete(`/api/admin/services/delete/${id}`);
         fetchServices();
       } catch (error) {
         console.error("Error deleting service:", error);
@@ -156,7 +156,7 @@ export default function ManageServices() {
               <td>
                 {item.image?.url && (
                     <Image 
-                        src={item.image.url.startsWith('http') ? item.image.url : `http://localhost:5000/${item.image.url}`} 
+                        src={item.image.url.startsWith('http') ? item.image.url : `/${item.image.url}`} 
                         thumbnail 
                         style={{ width: "80px", height: "80px", objectFit: "cover" }} 
                     />

@@ -21,7 +21,7 @@ export default function ManageGallery() {
   // Fetch Gallery Items
   const fetchGallery = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/admin/gallery");
+      const res = await axios.get("/api/admin/gallery");
       setGalleryItems(res.data);
     } catch (error) {
       console.error("Error fetching gallery:", error);
@@ -59,7 +59,7 @@ export default function ManageGallery() {
     try {
       if (editingItem) {
         // Edit Mode (Update Details)
-        await axios.put(`http://localhost:5000/api/admin/gallery/update/${editingItem._id}`, {
+        await axios.put(`/api/admin/gallery/update/${editingItem._id}`, {
             title: formData.title,
             category: formData.category,
             price: formData.price,
@@ -71,12 +71,12 @@ export default function ManageGallery() {
         if (formData.file) {
              const replaceData = new FormData();
              replaceData.append("media", formData.file);
-             await axios.put(`http://localhost:5000/api/admin/gallery/replace/${editingItem._id}`, replaceData);
+             await axios.put(`/api/admin/gallery/replace/${editingItem._id}`, replaceData);
         }
 
       } else {
         // Create Mode
-        await axios.post("http://localhost:5000/api/admin/gallery/create", data);
+        await axios.post("/api/admin/gallery/create", data);
       }
       
       setShowModal(false);
@@ -93,7 +93,7 @@ export default function ManageGallery() {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this item?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/admin/gallery/delete/${id}`);
+        await axios.delete(`/api/admin/gallery/delete/${id}`);
         fetchGallery();
       } catch (error) {
         console.error("Error deleting media:", error);
@@ -155,7 +155,7 @@ export default function ManageGallery() {
               <td>
                 {item.media?.url && (
                     <Image 
-                        src={item.media.url.startsWith('http') ? item.media.url : `http://localhost:5000/${item.media.url}`} 
+                        src={item.media.url.startsWith('http') ? item.media.url : `/${item.media.url}`} 
                         thumbnail 
                         style={{ width: "80px", height: "80px", objectFit: "cover" }} 
                     />

@@ -10,7 +10,7 @@ export default function Rentals() {
   useEffect(() => {
     const fetchRentals = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/admin/rentals");
+        const res = await axios.get("/api/admin/rentals");
         // Filter only active items for public view
         const activeRentals = res.data.filter(item => item.active);
         setRentals(activeRentals);
@@ -31,7 +31,7 @@ export default function Rentals() {
                <div className="p-3">
                  <Card.Img 
                    variant="top" 
-                   src={item.image?.url ? (item.image.url.startsWith('http') ? item.image.url : `http://localhost:5000/${item.image.url}`) : "https://via.placeholder.com/300"} 
+                   src={item.image?.url ? (item.image.url.startsWith('http') ? item.image.url : `/${item.image.url}`) : "https://via.placeholder.com/300"} 
                    style={{ height: "200px", objectFit: "cover" }}
                    className="rounded border border-secondary"
                  />
