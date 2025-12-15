@@ -22,7 +22,7 @@ const authMiddleware = require("../middleware/auth.middleware");
 
 // Routes
 router.post("/create", authMiddleware, upload.single("image"), serviceController.createService);
-router.put("/update/:id", authMiddleware, serviceController.updateService);
+router.put("/update/:id", authMiddleware, serviceController.updateDetails);
 router.put("/replace/:id", authMiddleware, upload.single("image"), serviceController.replaceImage);
 router.delete("/delete/:id", authMiddleware, serviceController.deleteService);
 router.get("/", serviceController.getAllServices);

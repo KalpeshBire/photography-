@@ -22,7 +22,7 @@ const authMiddleware = require("../middleware/auth.middleware");
 
 // Routes
 router.post("/create", authMiddleware, upload.single("image"), rentalController.createRental);
-router.put("/update/:id", authMiddleware, rentalController.updateRental);
+router.put("/update/:id", authMiddleware, rentalController.updateDetails);
 router.put("/replace/:id", authMiddleware, upload.single("image"), rentalController.replaceImage);
 router.delete("/delete/:id", authMiddleware, rentalController.deleteRental);
 router.get("/", rentalController.getAllRentals);
