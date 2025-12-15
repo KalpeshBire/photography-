@@ -10,7 +10,7 @@ export default function Services() {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const res = await axios.get("/api/admin/services");
+        const res = await axios.get("/api/services");
         // Filter only active items for public view
         const activeServices = res.data.filter(item => item.active);
         setServices(activeServices);
@@ -26,7 +26,7 @@ export default function Services() {
       <h2 className="text-center mb-4">Our Services</h2>
       <Row>
         {services.map((service) => (
-          <Col md={6} lg={3} key={service._id} className="mb-4">
+          <Col xs={12} sm={6} md={6} lg={4} key={service._id} className="mb-4">
             <Card className="h-100 shadow-sm border-0">
               <div className="p-3">
                  <Card.Img 

@@ -10,7 +10,7 @@ export default function Rentals() {
   useEffect(() => {
     const fetchRentals = async () => {
       try {
-        const res = await axios.get("/api/admin/rentals");
+        const res = await axios.get("/api/rentals");
         // Filter only active items for public view
         const activeRentals = res.data.filter(item => item.active);
         setRentals(activeRentals);
@@ -26,7 +26,7 @@ export default function Rentals() {
       <h2 className="text-center mb-4">Equipment Rentals</h2>
       <Row>
         {rentals.map((item) => (
-          <Col md={6} lg={4} key={item._id} className="mb-4">
+          <Col xs={12} sm={6} md={6} lg={4} key={item._id} className="mb-4">
             <Card className="h-100 shadow-sm border-0">
                <div className="p-3">
                  <Card.Img 

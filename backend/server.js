@@ -76,10 +76,10 @@ const rentalRoutes = require("./routes/rental.routes.js");
 // Public Routes
 app.use("/api/auth", authRoutes);
 
-// Protected Admin Routes
-app.use("/api/admin/gallery", authMiddleware, galleryRoutes);
-app.use("/api/admin/services", authMiddleware, serviceRoutes);
-app.use("/api/admin/rentals", authMiddleware, rentalRoutes);
+// Public & Admin Routes (Auth handled inside routers)
+app.use("/api/gallery", galleryRoutes);
+app.use("/api/services", serviceRoutes);
+app.use("/api/rentals", rentalRoutes);
 
 // app.get("/", (req, res) => {
 //   res.send("API is running...");

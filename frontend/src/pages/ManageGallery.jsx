@@ -21,7 +21,7 @@ export default function ManageGallery() {
   // Fetch Gallery Items
   const fetchGallery = async () => {
     try {
-      const res = await axios.get("/api/admin/gallery");
+      const res = await axios.get("/api/gallery");
       setGalleryItems(res.data);
     } catch (error) {
       console.error("Error fetching gallery:", error);
@@ -59,7 +59,7 @@ export default function ManageGallery() {
     try {
       if (editingItem) {
         // Edit Mode (Update Details)
-        await axios.put(`/api/admin/gallery/update/${editingItem._id}`, {
+        await axios.put(`/api/gallery/update/${editingItem._id}`, {
             title: formData.title,
             category: formData.category,
             price: formData.price,
@@ -71,12 +71,12 @@ export default function ManageGallery() {
         if (formData.file) {
              const replaceData = new FormData();
              replaceData.append("media", formData.file);
-             await axios.put(`/api/admin/gallery/replace/${editingItem._id}`, replaceData);
+             await axios.put(`/api/gallery/replace/${editingItem._id}`, replaceData);
         }
 
       } else {
         // Create Mode
-        await axios.post("/api/admin/gallery/create", data);
+        await axios.post("/api/gallery/create", data);
       }
       
       setShowModal(false);
@@ -93,7 +93,7 @@ export default function ManageGallery() {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this item?")) {
       try {
-        await axios.delete(`/api/admin/gallery/delete/${id}`);
+        await axios.delete(`/api/gallery/delete/${id}`);
         fetchGallery();
       } catch (error) {
         console.error("Error deleting media:", error);

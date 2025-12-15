@@ -21,7 +21,7 @@ export default function ManageRentals() {
   // Fetch Rentals
   const fetchRentals = async () => {
     try {
-      const res = await axios.get("/api/admin/rentals");
+      const res = await axios.get("/api/rentals");
       setRentals(res.data);
     } catch (error) {
       console.error("Error fetching rentals:", error);
@@ -59,7 +59,7 @@ export default function ManageRentals() {
     try {
       if (editingItem) {
         // Edit Mode (Update Details)
-        await axios.put(`/api/admin/rentals/update/${editingItem._id}`, {
+        await axios.put(`/api/rentals/update/${editingItem._id}`, {
             name: formData.name,
             type: formData.type,
             specs: formData.specs,
@@ -72,12 +72,12 @@ export default function ManageRentals() {
         if (formData.file) {
              const replaceData = new FormData();
              replaceData.append("image", formData.file);
-             await axios.put(`/api/admin/rentals/replace/${editingItem._id}`, replaceData);
+             await axios.put(`/api/rentals/replace/${editingItem._id}`, replaceData);
         }
 
       } else {
         // Create Mode
-        await axios.post("/api/admin/rentals/create", data);
+        await axios.post("/api/rentals/create", data);
       }
       
       setShowModal(false);
@@ -94,7 +94,7 @@ export default function ManageRentals() {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this rental item?")) {
       try {
-        await axios.delete(`/api/admin/rentals/delete/${id}`);
+        await axios.delete(`/api/rentals/delete/${id}`);
         fetchRentals();
       } catch (error) {
         console.error("Error deleting rental:", error);

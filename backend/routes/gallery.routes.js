@@ -23,11 +23,13 @@ const uploadStorage = isCloud ? storage : multer.diskStorage({
 
 const upload = multer({ storage: uploadStorage });
 
+const authMiddleware = require("../middleware/auth.middleware");
+
 // Routes
-router.post("/create", upload.single("media"), galleryController.createMedia);
-router.put("/update/:id", galleryController.updateDetails);
-router.put("/replace/:id", upload.single("media"), galleryController.replaceMedia);
-router.delete("/delete/:id", galleryController.deleteMedia);
+router.post("/create", authMiddleware, upload.single("media"), galleryController.createMedia);
+router.put("/update/:id", authMiddleware, galleryController.updateDetails);
+router.put("/replace/:id", authMiddleware, upload.single("media"), galleryController.replaceMedia);
+router.delete("/delete/:id", authMiddleware, galleryController.deleteMedia);
 router.get("/", galleryController.getAllMedia);
 
 module.exports = router;
