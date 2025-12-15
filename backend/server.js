@@ -19,6 +19,9 @@ const errorHandler = require("./middleware/error.middleware");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Trust Proxy (Required for Render/Heroku to handle secure cookies correctly)
+app.set("trust proxy", 1); 
+
 // Ensure uploads directory exists
 const uploadDir = path.join(__dirname, "uploads");
 
@@ -36,14 +39,16 @@ const sessionOperation = {
   store: store,
   secret: "danger",
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false, // Changed to false: verify auth before creating session
   cookie: {
     expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
     maxAge: 7 * 24 * 60 * 60 * 1000,
     httpOnly: true,
-    // Ensure cookies are sent in cross-site requests during development
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-    secure: process.env.NODE_ENV === "production",
+    // On Render, if Frontend and Backend are SAME ORIGIN (served by same express app), 'lax' or 'strict' is fine.
+    // 'none' is for cross-site (separate domains).
+    // Let's stick to 'lax' but ensure secure is true if HTTPS.
+    sameSite: process.env.NODE_ENV === "production" ? "lax" : "lax",
+    secure: process.env.NODE_ENV === "production", // Must be true on Render (HTTPS)
   },
 };
 
