@@ -12,7 +12,31 @@ import ManageServices from "./pages/ManageServices";
 import ManageRentals from "./pages/ManageRentals";
 import ProtectedRoute from "./components/ProtectedRoute";
 
+import { useState, useEffect } from "react";
+
 export default function App() {
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+
+  useEffect(() => {
+    const handler = (e) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+    window.addEventListener("beforeinstallprompt", handler);
+    return () => window.removeEventListener("beforeinstallprompt", handler);
+  }, []);
+
+  const handleInstallClick = () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === "accepted") {
+        console.log("User accepted the install prompt");
+      }
+      setDeferredPrompt(null);
+    });
+  };
+
   return (
     <BrowserRouter>
       <MainLayout>
@@ -56,6 +80,26 @@ export default function App() {
             } 
           />
         </Routes>
+        {deferredPrompt && (
+          <button
+            onClick={handleInstallClick}
+            style={{
+              position: "fixed",
+              bottom: "20px",
+              right: "20px",
+              padding: "10px 20px",
+              backgroundColor: "#0f172a",
+              color: "white",
+              border: "none",
+              borderRadius: "5px",
+              boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+              zIndex: 1000,
+              cursor: "pointer",
+            }}
+          >
+            Install App
+          </button>
+        )}
       </MainLayout>
     </BrowserRouter>
   );
